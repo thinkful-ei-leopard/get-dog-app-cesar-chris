@@ -6,8 +6,14 @@ function getDogImage() {
 
   function watchForm() {
     $('form').submit(event => {
-        event.preventDefault();
-        getDogImage();
+      event.preventDefault();
+
+      let inputVal = $('#number').val();
       
+      for (let i = 1; i <= inputVal; i++){
+        getDogImage();
+      }
     });
   } 
+
+  $(watchForm);
