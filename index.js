@@ -1,19 +1,25 @@
-function getDogImage() {
-    fetch('https://dog.ceo/api/breeds/image/random')
+function getDogImage(num = 3) {
+    fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
       .then(response => response.json())
-      .then(responseJson => console.log(responseJson));
+      .then(responseJson => displayResults(responseJson));
   }
 
   function watchForm() {
     $('form').submit(event => {
       event.preventDefault();
 
-      let inputVal = $('#number').val();
-      
-      for (let i = 1; i <= inputVal; i++){
-        getDogImage();
-      }
+      const inputVal = $('#number').val();      
+      getDogImage(inputVal);
     });
   } 
+
+  function displayResults(responseJson) {
+    console.log(responseJson);
+    $('.results').html(
+        responseJson.message.reduce((total, currentval) => {
+            return total + `<img src="${currentval}" class="results-img">`
+        },'')
+    )
+  }
 
   $(watchForm);
